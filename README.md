@@ -13,6 +13,9 @@ Formatted overview: **[`AUSTRIA_PUMPED_STORAGE.md`](AUSTRIA_PUMPED_STORAGE.md)**
 Theoretical / research potential (how much more Austria could have):  
 **[`AUSTRIA_PHS_THEORETICAL_POTENTIAL.md`](AUSTRIA_PHS_THEORETICAL_POTENTIAL.md)**
 
+Europe (annual TWh — production vs potential vs consumption):  
+**[`EUROPE_PHS_ANNUAL_POTENTIAL.md`](EUROPE_PHS_ANNUAL_POTENTIAL.md)**
+
 ```bash
 .venv/bin/python build_hydro_inventory.py   # refresh CSVs
 ```
