@@ -1,0 +1,12 @@
+reservoir: Schlegeisspeicher
+wis_id: T2614R1
+wis_name: Speicher Schlegeis (2-8-214-40-15-14)
+published_volume_hm3: 126.5
+full_supply_level_m: 1782.0
+dam_height_m: 131.0
+map_volume_hm3: 101.081
+map_dmax_m: 131.00
+globathy_hylak_id: 169131
+globathy_dmax_use_m: 28.81
+linked_plant: Roßhag (pumped storage, 231 MW) → lower basin Stillupp
+note: geometric depth from distance-to-shore, scaled to published volume; not a survey

@@ -6,3 +6,13 @@ overlays/raw/
 overlays/preview*.png
 ALS_DTM_1m/
 *.tif
+hydro_data/globathy/
+hydro_data/tirol_seen/
+hydro_data/wiki_*.html
+hydro_data/wiki_*.json
+hydro_data/wd_*.json
+hydro_data/*.zip
+hydro_data/eurelectric_phs.pdf
+hydro_data/eurelectric_phs.txt
+hydro_data/anlagenregister_home.html
+hydro_data/aeiou.html

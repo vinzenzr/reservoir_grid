@@ -1,0 +1,42 @@
+id,reservoir_name,linked_plant,role,volume_hm3,surface_area_km2,full_supply_level_m,dam_height_m,lat,lon,state,notes,pump_hydro_related,tirol_wis_id,tirol_wis_area_km2
+1,Kölnbreinspeicher,Malta-Hauptstufe,upper,200.2,2.5,1902.0,200.0,47.079,13.344,,Malta-Reißeck group; VERBUND volume,True,,
+2,Ausgleichsbecken Rottau / Galgenbichl,Malta-Hauptstufe,lower,,,,,46.923,13.355,,Lower basin for pumps,True,,
+3,Großer Mühldorfer See / Reißeck lakes,Malta-Oberstufe,upper,,,,,46.925,13.365,,Reißeck plateau lakes,True,,
+4,Kölnbreinspeicher,Malta-Oberstufe,lower,200.2,2.5,1902.0,200.0,47.079,13.344,,,True,,
+5,Reißeck / Großer See group,Reißeck II,upper,,,,,46.93,13.37,,Links Reißeck lakes to Kölnbrein,True,,
+6,Kölnbreinspeicher,Reißeck II,lower,200.2,2.5,1902.0,200.0,47.079,13.344,,,True,,
+7,Mooserboden,Limberg II,upper,84.9,1.6,2036.0,107.0,47.168,12.718,,Kaprun; VERBUND volume,True,,
+8,Wasserfallboden,Limberg II,lower,81.2,1.5,1672.0,120.0,47.183,12.722,,Kaprun,True,,
+9,Mooserboden,Kaprun Oberstufe Limberg,upper,84.9,1.6,2036.0,107.0,47.168,12.718,,,True,,
+10,Wasserfallboden,Kaprun Oberstufe Limberg,lower,81.2,1.5,1672.0,120.0,47.183,12.722,,,True,,
+11,Kopssee (Kops),Kopswerk II,upper,42.9,1.0,1809.0,122.0,46.972,10.122,,illwerke vkw,True,,
+12,Rifa / Vermunt cascade,Kopswerk II,lower,,,,,47.01,10.05,,Via Obervermunt / Rodund system,True,,
+13,Silvretta-Stausee,Obervermuntwerk II,upper,38.0,1.3,2030.0,80.0,46.918,10.092,,,True,,
+14,Vermuntsee,Obervermuntwerk II,lower,11.0,0.4,1743.0,54.0,46.955,10.065,,,True,,
+15,Latschau / Vermunt cascade,Rodundwerk II,upper,,,,,47.07,9.88,,illwerke Rodund group,True,,
+16,Rodundbecken,Rodundwerk II,lower,,,,,47.1,9.85,,,True,,
+17,Latschau / Vermunt cascade,Rodundwerk I,upper,,,,,47.07,9.88,,,True,,
+18,Rodundbecken,Rodundwerk I,lower,,,,,47.1,9.85,,,True,,
+19,Lünersee,Lünerseewerk,upper,78.3,1.55,1970.0,,47.052,9.753,,Natural lake raised,True,,
+20,Latschau / Ill cascade,Lünerseewerk,lower,,,,,47.07,9.88,,,True,,
+21,Speicher Zillergründl,Häusling,upper,86.7,1.28,1850.0,186.0,47.121,12.067,,Zemm-Ziller; VERBUND,True,T2906R1,1.277
+22,Speicher Stillupp,Häusling,lower,6.8,0.55,1120.0,28.0,47.075,11.862,,Weekly storage / lower basin,True,T2719R1,0.551
+23,Schlegeisspeicher,Roßhag,upper,126.5,2.02,1782.0,131.0,47.033,11.704,,Zemm-Ziller; VERBUND,True,T2614R1,2.024
+24,Speicher Stillupp,Roßhag,lower,6.8,0.55,1120.0,28.0,47.075,11.862,,,True,T2719R1,0.551
+25,Speicher Finstertal,Kühtai,upper,60.0,1.02,2325.0,150.0,47.213,11.041,,Sellrain-Silz; TIWAG,True,T5422R1,1.023
+26,Ausgleichsbecken Längental,Kühtai,lower,3.0,0.18,1900.0,,47.21,11.015,,,True,T5433R1,0.177
+27,Speicher Finstertal,Silz,upper,60.0,1.02,2325.0,150.0,47.213,11.041,,Turbine-only from Finstertal (not a pump plant),True,T5422R1,1.023
+28,Feldsee (Fragant),Feldsee,upper,,,,,46.95,13.05,,KELAG Fragant group,True,,
+29,Wurten / Fragant cascade,Feldsee,lower,,,,,46.94,13.03,,,True,,
+30,Koralpe upper basin,Koralpe,upper,,,,,46.75,15.02,,KELAG,True,,
+31,Koralpe lower basin,Koralpe,lower,,,,,46.74,15.03,,,True,,
+32,Ranna / Klaffer reservoirs,Ranna,upper,,,,,48.58,13.78,,Energie AG; earliest AT PS (1925),True,,
+33,Ranna lower basin,Ranna,lower,,,,,48.57,13.79,,,True,,
+34,Fragant / Wurten reservoirs,Innerfragant I,upper,,,,,46.95,13.05,,KELAG,True,,
+35,Fragant / Wurten reservoirs,Innerfragant II,upper,,,,,46.95,13.05,,KELAG,True,,
+36,Reißeck Jahresspeicher lakes,Reißeck Jahresspeicher,upper,,,,,46.93,13.37,,VERBUND Reißeck,True,,
+37,Wienerbruck reservoir,Wienerbruck,upper,,,,,47.85,15.3,,evn; small PS (**),True,,
+38,Erlaufboden reservoir,Erlaufboden,upper,,,,,47.87,15.28,,evn; small PS (**),True,,
+39,Stausee Gepatsch,,storage,138.0,2.6,1767.0,153.0,46.931,10.745,Tirol,TIWAG Kaunertal; storage (not PS upper/lower pair),storage_associated,T4579R1,2.533
+40,Achensee,,storage,481.0,6.8,929.0,,47.45,11.71,Tirol,TIWAG Achenseewerk; natural lake used as storage,storage_associated,T1643R1,7.085
+41,Speicher Durlaßboden,,storage,52.0,1.75,1405.0,,47.28,12.08,Tirol,Gerlos group; VERBUND lists 50.7 hm³,storage_associated,T2860R1,1.749

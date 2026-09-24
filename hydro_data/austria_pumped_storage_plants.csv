@@ -1,0 +1,22 @@
+id,plant_name,capacity_mw,annual_gen_gwh,head_m,design_flow_m3s,commissioned,state,operator,source,status,plant_type
+1,Malta-Hauptstufe,730.0,715.0,110.6,800.0,1979.0,Kärnten,Austrian Hydro Power AG,wikipedia_liste_pumpspeicherkraftwerke,operating,pumped_storage
+2,Kopswerk II,525.0,,818.0,800.0,2008.0,Vorarlberg,illwerke vkw AG,wikipedia_liste_pumpspeicherkraftwerke,operating,pumped_storage
+3,Limberg II,480.0,,346.0,144.0,2012.0,Salzburg,Austrian Hydro Power AG,wikipedia_liste_pumpspeicherkraftwerke,operating,pumped_storage
+4,Reißeck II,430.0,,595.0,800.0,2015.0,Kärnten,Austrian Hydro Power AG,wikipedia_liste_pumpspeicherkraftwerke,operating,pumped_storage
+5,Obervermuntwerk II,380.0,,291.0,150.0,2019.0,Vorarlberg,illwerke vkw AG,wikipedia_liste_pumpspeicherkraftwerke,operating,pumped_storage
+6,Häusling,360.0,179.4,696.0,650.0,1988.0,Tirol,Austrian Hydro Power AG,wikipedia_liste_pumpspeicherkraftwerke,operating,pumped_storage
+7,Rodundwerk II,295.0,486.0,354.0,980.0,1976.0,Vorarlberg,illwerke vkw AG,wikipedia_liste_pumpspeicherkraftwerke,operating,pumped_storage
+8,Kühtai,289.0,531.0,319.0,800.0,1981.0,Tirol,Tiroler Wasserkraft AG,wikipedia_wasserkraftwerke_starred,operating,pumped_storage
+9,Lünerseewerk,280.0,371.0,974.0,380.0,1958.0,Vorarlberg,illwerke vkw AG,wikipedia_liste_pumpspeicherkraftwerke,operating,pumped_storage
+10,Roßhag,231.0,312.0,630.0,520.0,1972.0,Tirol,Austrian Hydro Power AG,wikipedia_liste_pumpspeicherkraftwerke,operating,pumped_storage
+11,Rodundwerk I,198.0,322.0,354.0,600.0,1952.0,Vorarlberg,illwerke vkw AG,wikipedia_liste_pumpspeicherkraftwerke,operating,pumped_storage
+12,Feldsee,140.0,300.0,524.0,,2009.0,Kärnten,Kelag,wikipedia_liste_pumpspeicherkraftwerke,operating,pumped_storage
+13,Malta-Oberstufe,120.0,760.0,198.0,700.0,1992.0,Ktn,VERBUND Hydro Power AG,wikipedia_wasserkraftwerke_starred,operating,pumped_storage
+14,Kaprun Oberstufe Limberg,112.8,166.1,365.0,360.0,1955.0,Sbg,VERBUND Hydro Power AG,wikipedia_wasserkraftwerke_starred,operating,pumped_storage
+15,Innerfragant I,108.0,820.0,118.5,101.0,,Ktn,KELAG,wikipedia_wasserkraftwerke_starred,operating,pumped_storage
+16,Innerfragant II,100.0,930.0,409.0,159.0,,Ktn,KELAG,wikipedia_wasserkraftwerke_starred,operating,pumped_storage
+17,Reißeck Jahresspeicher,67.5,730.0,177.3,45.0,1961.0,Ktn,VERBUND Hydro Power AG,wikipedia_wasserkraftwerke_starred,operating,pumped_storage
+18,Wienerbruck,66.0,,,,1973.0,NÖ,evn naturkraft,wikipedia_wasserkraftwerke_starred,operating,pumped_storage
+19,Koralpe,50.0,160.0,,,2011.0,Kärnten,Kelag,wikipedia_liste_pumpspeicherkraftwerke,operating,pumped_storage
+20,Erlaufboden,34.0,,,,1923.0,NÖ,evn naturkraft,wikipedia_wasserkraftwerke_starred,operating,pumped_storage
+21,Ranna,19.0,477.0,10.0,12.0,1925.0,Oberösterreich,Energie AG,wikipedia_liste_pumpspeicherkraftwerke,operating,pumped_storage
