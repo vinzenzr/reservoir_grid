@@ -111,9 +111,13 @@ def downsample(elevation: np.ndarray, factor: int) -> np.ndarray:
     trimmed = elevation[:rows, :cols]
     reshaped = trimmed.reshape(rows // factor, factor, cols // factor, factor)
     # nanmean over each block so nodata edges do not dominate
-    with np.errstate(all="ignore"):
-        block_mean = np.nanmean(reshaped, axis=(1, 3))
-    return block_mean.astype(np.float32)
+    import warnings
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", category=RuntimeWarning)
+        with np.errstate(all="ignore"):
+            block_mean = np.nanmean(reshaped, axis=(1, 3))
+    return np.asarray(block_mean, dtype=np.float32)
+
 
 
 def altitude_cmap():
@@ -134,9 +138,106 @@ def altitude_cmap():
     )
 
 
-def visualize(elevation: np.ndarray, meta: dict[str, float], downsample_factor: int) -> None:
+OVERLAY_DIR = Path(__file__).resolve().parent / "overlays"
+WATER_FACE = "#3a7fc1"
+WATER_EDGE = "#2a5f94"
+RIVER_COLOR = "#4a90c8"
+CITY_COLOR = "#1a1a1a"
+
+
+def load_overlays(overlay_dir: Path) -> tuple:
+    """Load lakes, rivers, and top-100 city markers (EPSG:31287)."""
+    import geopandas as gpd
+
+    lakes_path = overlay_dir / "lakes.gpkg"
+    rivers_path = overlay_dir / "rivers.gpkg"
+    cities_path = overlay_dir / "cities_top100.gpkg"
+    missing = [p.name for p in (lakes_path, rivers_path, cities_path) if not p.exists()]
+    if missing:
+        raise FileNotFoundError(
+            f"Missing overlay files: {', '.join(missing)}. "
+            "Run: python prepare_overlays.py"
+        )
+    lakes = gpd.read_file(lakes_path)
+    rivers = gpd.read_file(rivers_path)
+    cities = gpd.read_file(cities_path)
+    return lakes, rivers, cities
+
+
+def draw_overlays(ax, lakes, rivers, cities, label_top: int = 25) -> dict[str, list]:
+    """Plot water + cities; return artist lists keyed for layer toggles."""
+    artists: dict[str, list] = {"Lakes": [], "Rivers": [], "Cities": []}
+
+    if len(rivers):
+        major = rivers["length_m"] >= 8000
+        if (~major).any():
+            n0 = len(ax.collections)
+            rivers.loc[~major].plot(ax=ax, color=RIVER_COLOR, linewidth=0.35, alpha=0.5, zorder=3)
+            artists["Rivers"].extend(ax.collections[n0:])
+        if major.any():
+            n0 = len(ax.collections)
+            rivers.loc[major].plot(ax=ax, color=RIVER_COLOR, linewidth=0.9, alpha=0.5, zorder=4)
+            artists["Rivers"].extend(ax.collections[n0:])
+
+    if len(lakes):
+        n0 = len(ax.collections)
+        lakes.plot(
+            ax=ax,
+            facecolor=WATER_FACE,
+            edgecolor=WATER_EDGE,
+            linewidth=0.4,
+            alpha=0.5,
+            zorder=5,
+        )
+        artists["Lakes"].extend(ax.collections[n0:])
+
+    if not len(cities):
+        return artists
+
+    sizes = 18 + 70 * (cities["population"] / cities["population"].max()) ** 0.5
+    scatter = ax.scatter(
+        cities.geometry.x,
+        cities.geometry.y,
+        s=sizes,
+        c=CITY_COLOR,
+        marker="o",
+        linewidths=0.6,
+        edgecolors="white",
+        zorder=6,
+        label="Cities (top 100)",
+    )
+    artists["Cities"].append(scatter)
+
+    from matplotlib import patheffects as pe
+
+    label_fx = [pe.withStroke(linewidth=2.2, foreground="white")]
+    for _, row in cities.nsmallest(label_top, "rank").iterrows():
+        ann = ax.annotate(
+            row["name"],
+            xy=(row.geometry.x, row.geometry.y),
+            xytext=(4, 4),
+            textcoords="offset points",
+            fontsize=7 if row["rank"] > 10 else 8.5,
+            fontweight="bold" if row["rank"] <= 10 else "normal",
+            color="#111111",
+            zorder=7,
+            path_effects=label_fx,
+        )
+        artists["Cities"].append(ann)
+
+    return artists
+
+
+def visualize(
+    elevation: np.ndarray,
+    meta: dict[str, float],
+    downsample_factor: int,
+    overlay_dir: Path | None = None,
+    show_overlays: bool = True,
+) -> None:
     import matplotlib.pyplot as plt
     from matplotlib.colors import LightSource, Normalize
+    from matplotlib.widgets import CheckButtons
 
     display = downsample(elevation, downsample_factor)
     cell = meta["cellsize"] * downsample_factor
@@ -168,17 +269,62 @@ def visualize(elevation: np.ndarray, meta: dict[str, float], downsample_factor: 
     rgb = rgb.copy()
     rgb[mask] = 0.92  # light gray background outside Austria
 
-    fig, ax = plt.subplots(figsize=(14, 8), constrained_layout=True)
-    ax.imshow(rgb, extent=(xll, xmax, ymin, ymax), origin="upper", interpolation="nearest")
+    fig, ax = plt.subplots(figsize=(15, 8))
+    # Leave room on the right for colorbar + layer checklist
+    fig.subplots_adjust(left=0.07, right=0.72, top=0.94, bottom=0.08)
+
+    elev_im = ax.imshow(
+        rgb, extent=(xll, xmax, ymin, ymax), origin="upper", interpolation="nearest", zorder=1
+    )
+    cax = fig.add_axes([0.735, 0.15, 0.015, 0.7])
     sm = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
     sm.set_array([])
-    cbar = fig.colorbar(sm, ax=ax, shrink=0.85, pad=0.02)
+    cbar = fig.colorbar(sm, cax=cax)
     cbar.set_label("Elevation (m)")
 
-    ax.set_title("Austria — BEV Digital Terrain Model (50 m)")
+    layer_artists: dict[str, list] = {
+        "Elevation": [elev_im, cax],
+        "Lakes": [],
+        "Rivers": [],
+        "Cities": [],
+    }
+
+    if show_overlays:
+        overlay_dir = overlay_dir or OVERLAY_DIR
+        lakes, rivers, cities = load_overlays(overlay_dir)
+        drawn = draw_overlays(ax, lakes, rivers, cities)
+        layer_artists["Lakes"] = drawn["Lakes"]
+        layer_artists["Rivers"] = drawn["Rivers"]
+        layer_artists["Cities"] = drawn["Cities"]
+
+    ax.set_title("Austria — elevation, water & largest cities")
     ax.set_xlabel("Easting (m, MGI / Austria Lambert)")
     ax.set_ylabel("Northing (m, MGI / Austria Lambert)")
     ax.set_aspect("equal")
+    ax.set_xlim(xll, xmax)
+    ax.set_ylim(ymin, ymax)
+
+    # Side checklist to toggle layers
+    labels = ["Elevation", "Lakes", "Rivers", "Cities"]
+    active = [True, show_overlays, show_overlays, show_overlays]
+    rax = fig.add_axes([0.78, 0.55, 0.18, 0.28])
+    rax.set_facecolor("#f7f7f7")
+    for spine in rax.spines.values():
+        spine.set_color("#cccccc")
+    rax.set_title("Layers", fontsize=10, pad=8)
+    check = CheckButtons(rax, labels, active)
+
+    def on_toggle(label: str) -> None:
+        status = check.get_status()
+        visible = status[labels.index(label)]
+        for artist in layer_artists.get(label, []):
+            artist.set_visible(visible)
+        fig.canvas.draw_idle()
+
+    check.on_clicked(on_toggle)
+    # Keep widget alive (matplotlib can GC it otherwise)
+    fig._layer_check = check  # type: ignore[attr-defined]
+    fig._layer_artists = layer_artists  # type: ignore[attr-defined]
 
     # Cursor readout of altitude under the mouse
     def format_coord(x: float, y: float) -> str:
@@ -192,7 +338,7 @@ def visualize(elevation: np.ndarray, meta: dict[str, float], downsample_factor: 
 
     ax.format_coord = format_coord
 
-    print("Interactive window open — use the toolbar to pan/zoom. Close the window to exit.")
+    print("Interactive window open — use the side checklist to toggle layers, toolbar to pan/zoom.")
     print(f"Elevation range (display): {vmin:.0f} … {vmax:.0f} m")
     plt.show()
 
@@ -216,6 +362,17 @@ def main() -> int:
         action="store_true",
         help="Force rebuild of the mosaic cache",
     )
+    parser.add_argument(
+        "--no-overlays",
+        action="store_true",
+        help="Show elevation only (skip water and cities)",
+    )
+    parser.add_argument(
+        "--overlay-dir",
+        type=Path,
+        default=OVERLAY_DIR,
+        help="Directory with lakes.gpkg, rivers.gpkg, cities_top100.gpkg",
+    )
     args = parser.parse_args()
 
     if args.downsample < 1:
@@ -233,7 +390,13 @@ def main() -> int:
     elevation, meta = build_mosaic(args.data_dir, force=args.rebuild_cache)
     # ymax needed for display math
     meta["ymax"] = meta["yllcorner"] + (elevation.shape[0] - 1) * meta["cellsize"]
-    visualize(elevation, meta, args.downsample)
+    visualize(
+        elevation,
+        meta,
+        args.downsample,
+        overlay_dir=args.overlay_dir,
+        show_overlays=not args.no_overlays,
+    )
     return 0
 
 

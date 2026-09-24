@@ -2,3 +2,5 @@
 __pycache__/
 *.pyc
 DGM_Rasterweite_50m/_mosaic_50m.npz
+overlays/raw/
+overlays/preview_with_overlays.png
