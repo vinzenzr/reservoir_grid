@@ -10,6 +10,9 @@ Austria elevation + pumped-storage hydro inventory.
 
 Formatted overview: **[`AUSTRIA_PUMPED_STORAGE.md`](AUSTRIA_PUMPED_STORAGE.md)**
 
+Theoretical / research potential (how much more Austria could have):  
+**[`AUSTRIA_PHS_THEORETICAL_POTENTIAL.md`](AUSTRIA_PHS_THEORETICAL_POTENTIAL.md)**
+
 ```bash
 .venv/bin/python build_hydro_inventory.py   # refresh CSVs
 ```
