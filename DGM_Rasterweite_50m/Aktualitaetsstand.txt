@@ -1,0 +1,8 @@
+
+BEV - Bundesamt für Eich- und Vermessungswesen
+
+Produkt: Digitales Geländehöhenmodell - Höhenraster 50 m (DGM)
+
+Aktualitätsstand (Stichtag) der enthaltenen Daten: 15.04.2021
+
+www.bev.gv.at
