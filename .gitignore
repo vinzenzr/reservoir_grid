@@ -1,0 +1,4 @@
+.venv/
+__pycache__/
+*.pyc
+DGM_Rasterweite_50m/_mosaic_50m.npz
